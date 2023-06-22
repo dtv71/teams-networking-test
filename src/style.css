@@ -5,7 +5,7 @@ h1 {
   width: 100%;
   border-collapse: collapse;
 }
-#teamstable th,
+#teamsTable th,
 #teamsTable td {
   border: 1px solid #057988;
 }

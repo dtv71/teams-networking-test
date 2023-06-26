@@ -19,39 +19,46 @@
     </header>
     <div id="main">
       <div class="tbar tbar-lr">
-        <div class="tbar-left">
-
-        </div>
+        <div class="tbar-left"></div>
         <div class="tbar-right">
           <input type="text" id="searchTeams" name="teams" />
           <label for="search">🔎</label>
         </div>
       </div>
-   
-      <table id="teamsTable">
-        <thead>
-          <tr>
-            <th>Promotion</th>
-            <th>Members</th>
-            <th>Project name</th>
-            <th>Project URL</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-        <tfoot>
-          <tr>
-            <td><input type="text" name="promotion" id="promotion" placeholder="Enter Promotion"></td>
-            <td><input type="text" name="members" id="members" placeholder="Enter Members"></td>
-            <td><input type="text" name="name" id="name" placeholder="Enter Project name"></td>
-            <td><input type="text" name="url" id="url" placeholder="Enter Url"></td>
-            <td>
-              <button type="submit">💾</button>
-              <button type="reset">✖</button>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
+      <form id="teamsForm" action="" method="get">
+        <table id="teamsTable">
+          <thead>
+            <tr>
+              <th>Promotion</th>
+              <th>Members</th>
+              <th>Project name</th>
+              <th>Project URL</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+          <tfoot>
+            <tr>
+              <td>
+                <input type="text" name="promotion" id="promotion" placeholder="Enter Promotion" required />
+              </td>
+              <td>
+                <input type="text" name="members" id="members" placeholder="Enter Members" required />
+              </td>
+              <td>
+                <input type="text" name="name" id="name" placeholder="Enter Project name" required />
+              </td>
+              <td>
+                <input type="text" name="url" id="url" placeholder="Enter Url" required />
+              </td>
+              <td>
+                <button type="submit">💾</button>
+                <button type="reset">✖</button>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </form>
     </div>
 
     <footer>

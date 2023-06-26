@@ -1,4 +1,6 @@
 import "./style.css";
+
+let allTeams = [];
 function $(selector) {
   return document.querySelector(selector);
 }
@@ -13,6 +15,23 @@ function deleteTeamRequest(id) {
   }).then(r => r.json());
 }
 
+function updateTeamRequest() {
+  // PUT teams-json/update
+  fetch("http://localhost:3000/teams-json/update", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      id: "fedcba1610310163146",
+      promotion: "WON3",
+      members: "UpdatedName",
+      name: "Name",
+      url: "https://github.com/nmatei/teams-networking"
+    })
+  });
+}
+
 function getTeamsAsHtml(team) {
   const row = `<tr>
     <td>${team.promotion}</td>
@@ -21,7 +40,7 @@ function getTeamsAsHtml(team) {
     <td><a href="${team.url}" target="_blank">${team.url}</a></td>
     <td>
     <a data-id="${team.id}" class="remove-btn" href="#">✖</a> 
-    <a class="edit-btn" href="#">&#9998</a></td>
+    <a data-id="${team.id}" class="edit-btn" href="#">&#9998</a></td>
     </tr>`;
   return row;
 }
@@ -40,8 +59,18 @@ function loadTeams() {
   })
     .then(r => r.json())
     .then(teams => {
+      allTeams = teams;
       displayTeams(teams);
     });
+}
+
+function startEdit(id) {
+  const team = allTeams.find(team => team.id == id);
+  console.log(team);
+  $("#promotion").value = team.promotion;
+  $("#members").value = team.members;
+  $("input[name=name]").value = team.name;
+  $("input[name=url]").value = team.url;
 }
 
 function initEvents() {
@@ -54,6 +83,11 @@ function initEvents() {
           loadTeams();
         }
       });
+    } else if (e.target.matches("a.edit-btn")) {
+      const id = e.target.dataset.id;
+
+      startEdit(id);
+      // console.warn("edit", e.target.parentNode);
     }
   });
 }

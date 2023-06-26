@@ -9,15 +9,15 @@
   {
     "id": 2,
     "promotion": "Transilvania 03",
-    "members": "T03",
-    "name": "ZeroTrei",
-    "url": "https://github.com/dtv71/teams-networking-test"
+    "members": "NMatei",
+    "name": "T-Zero-Trei",
+    "url": "https://github.com/nmatei/teams-networking"
   },
   {
     "id": 3,
     "promotion": "Transilvania 02",
     "members": "T02",
-    "name": "ZeroDoi",
+    "name": "T-Zero-Doi",
     "url": "https://github.com/dtv71/teams-networking-test"
   }
 ]

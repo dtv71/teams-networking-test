@@ -3,21 +3,21 @@
     "id": 1,
     "promotion": "FastTrackIT",
     "members": "Dan Tarta",
-    "name": "Teams Networking",
+    "name": "DTV71: Teams Networking",
     "url": "https://github.com/dtv71/teams-networking-test"
   },
   {
     "id": 2,
-    "promotion": "Transilvania 03",
+    "promotion": "Transilvania 03 - Code",
     "members": "NMatei",
-    "name": "T-Zero-Trei",
+    "name": "Teams Networking-Cod",
     "url": "https://github.com/nmatei/teams-networking"
   },
   {
     "id": 3,
-    "promotion": "Transilvania 02",
-    "members": "T02",
-    "name": "T-Zero-Doi",
-    "url": "https://github.com/dtv71/teams-networking-test"
+    "promotion": "Transilvania 03 - Live preview",
+    "members": "NMatei ",
+    "name": "Teams Networking - live",
+    "url": "https://nmatei.github.io/teams-networking/"
   }
 ]

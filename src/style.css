@@ -55,6 +55,20 @@ header h1 {
 
 #main {
   flex: 1;
+  padding: 15px;
+}
+.tbar-lr {
+  display: flex;
+}
+.tbar {
+  margin-bottom: 5px;
+}
+.tbar-left {
+  flex: 1;
+}
+
+.tbar-right {
+  margin-left: 20px;
 }
 h1 {
   color: #057988;
@@ -67,6 +81,7 @@ h1 {
 #teamsTable th,
 #teamsTable td {
   border: 1px solid #057988;
+  padding: 5px;
 }
 
 footer {
@@ -97,4 +112,19 @@ footer .item {
   align-items: center;
   justify-content: center;
   gap: 3px;
+}
+a {
+  color: #0096d6;
+  text-decoration: none;
+}
+.remove-btn:hover{
+  text-decoration: underline;
+  color: darkred;
+  cursor: pointer;
+}
+
+.edit-btn:hover{
+  text-decoration: underline;
+  color: green;
+  cursor: pointer;
 }

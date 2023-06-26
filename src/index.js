@@ -124,6 +124,9 @@ function initEvents() {
     }
   });
   $("#teamsForm").addEventListener("submit", onSubmit);
+  $("#teamsForm").addEventListener("reset", () => {
+    editId = undefined;
+  });
 }
 
 loadTeams();

@@ -93,14 +93,17 @@ function onSubmit(e) {
     url: url
   };
   if (editId) {
+    team.id = editId;
     updateTeamRequest(team).then(status => {
       if (status.success) {
+        // v1
         window.location.reload();
       }
     });
   } else {
     createTeamRequest(team).then(status => {
       if (status.success) {
+        // v1
         window.location.reload();
       }
     });

@@ -117,11 +117,25 @@ function onSubmit(e) {
       if (status.success) {
         // v 1
         // window.location.reload();
+
         //v 2
         //loadTeams();
+
         //v 3
-        const i = allTeams.findIndex(t => t.id === editId);
-        allteams[i] = team;
+        //const i = allTeams.findIndex(t => t.id === editId);
+        //allteams[i] = team;
+
+        //v 4
+        // const edited = allTeams.find(t => t.id === editId);
+        // edited.name = team.name;
+        // edited.promotion = team.promotion;
+        // edited.members = team.members;
+        // edited.url = team.url;
+
+        // v 5 - Object.assign
+        const edited = allTeams.find(t => t.id === editId);
+        Object.assign(edited, team);
+
         displayTeams(teams);
         $("#teamsForm").reset();
       }

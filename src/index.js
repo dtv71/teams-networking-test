@@ -39,15 +39,17 @@ function createTeamRequest(team) {
   }).then(r => r.json());
 }
 
-function getTeamsAsHtml(team) {
+function getTeamsAsHtml({ id, promotion, members, name, url }) {
+  const stringToReplace = "https://github.com/";
+  const displayUrl = url.startsWith(stringToReplace) ? ".../" + url.substring(stringToReplace.length) : url;
   const row = `<tr>
-    <td>${team.promotion}</td>
-    <td>${team.members}</td>
-    <td>${team.name}</td>
-    <td><a href="${team.url}" target="_blank">${team.url}</a></td>
+    <td>${promotion}</td>
+    <td>${members}</td>
+    <td>${name}</td>
+    <td><a href="${url}" target="_blank">${displayUrl}</a></td>
     <td>
-    <a data-id="${team.id}" class="remove-btn" href="#">✖</a> 
-    <a data-id="${team.id}" class="edit-btn" href="#">&#9998</a></td>
+    <a data-id="${id}" class="remove-btn" href="#">✖</a> 
+    <a data-id="${id}" class="edit-btn" href="#">&#9998</a></td>
     </tr>`;
   return row;
 }
@@ -92,11 +94,11 @@ function startEdit(id) {
   setTeamValues(team);
 }
 
-function setTeamValues(team) {
-  $("#promotion").value = team.promotion;
-  $("#members").value = team.members;
-  $("input[name=name]").value = team.name;
-  $("input[name=url]").value = team.url;
+function setTeamValues({ promotion, members, name, url }) {
+  $("#promotion").value = promotion;
+  $("#members").value = members;
+  $("input[name=name]").value = name;
+  $("input[name=url]").value = url;
 }
 
 function getTeamValues() {
@@ -209,9 +211,9 @@ function initEvents() {
   $("#teamsTable tbody").addEventListener("click", e => {
     if (e.target.matches("a.remove-btn")) {
       const id = e.target.dataset.id;
-      deleteTeamRequest(id).then(status => {
-        if (status.success) {
-          console.warn("delete done", status);
+      deleteTeamRequest(id, ({ success }) => {
+        if (success) {
+          console.warn("delete done", success``);
           loadTeams();
         }
       });

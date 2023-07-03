@@ -115,10 +115,14 @@ function onSubmit(e) {
   } else {
     createTeamRequest(team).then(status => {
       if (status.success) {
-        // v1
+        // v 1
         // window.location.reload();
         //v 2
-        loadTeams();
+        //loadTeams();
+        //v 3
+        const i = allTeams.findIndex(t => t.id === editId);
+        allteams[i] = team;
+        displayTeams(teams);
         $("#teamsForm").reset();
       }
     });

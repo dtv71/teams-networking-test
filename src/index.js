@@ -105,16 +105,6 @@ function onSubmit(e) {
     team.id = editId;
     updateTeamRequest(team).then(status => {
       if (status.success) {
-        // v1
-        // window.location.reload();
-        //v 2
-        loadTeams();
-        $("#teamsForm").reset();
-      }
-    });
-  } else {
-    createTeamRequest(team).then(status => {
-      if (status.success) {
         // v 1
         // window.location.reload();
 
@@ -125,7 +115,7 @@ function onSubmit(e) {
         //const i = allTeams.findIndex(t => t.id === editId);
         //allteams[i] = team;
 
-        //v 4
+        //v 4 - schimbam expplicit valorile modificate
         // const edited = allTeams.find(t => t.id === editId);
         // edited.name = team.name;
         // edited.promotion = team.promotion;
@@ -136,7 +126,23 @@ function onSubmit(e) {
         const edited = allTeams.find(t => t.id === editId);
         Object.assign(edited, team);
 
-        displayTeams(teams);
+        displayTeams(allTeams);
+        $("#teamsForm").reset();
+      }
+    });
+  } else {
+    createTeamRequest(team).then(status => {
+      if (status.success) {
+        // v1
+        // window.location.reload();
+        //v 2
+        //loadTeams();
+
+        //v3
+        console.info("saved", JSON.parse(JSON.stringify(team)));
+        team.id = status.id;
+        allTeams.push(team);
+        displayTeams(allTeams);
         $("#teamsForm").reset();
       }
     });

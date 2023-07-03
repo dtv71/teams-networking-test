@@ -130,6 +130,8 @@ function onSubmit(e) {
         // edited.url = team.url;
 
         // v 5 - Object.assign
+
+        allTeams = [...allTeams];
         const edited = allTeams.find(t => t.id === editId);
         Object.assign(edited, team);
 
@@ -149,7 +151,7 @@ function onSubmit(e) {
         console.info("saved", JSON.parse(JSON.stringify(team)));
         team.id = status.id;
         // allTeams.push(team);
-        allTeams = [...allTeams, team];
+        allTeams = [...allTeams, team]; // trebie recreat modificat array-ul
         displayTeams(allTeams);
         $("#teamsForm").reset();
       }

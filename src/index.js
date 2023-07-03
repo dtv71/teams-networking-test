@@ -59,6 +59,7 @@ function displayTeams(teams) {
     return;
   }
   if (teams.length === previewDisplayTeams) {
+    console.log("leng");
     if (teams.every((team, i) => team === previewDisplayTeams[i])) {
       console.warn("sameContent");
       return;
@@ -137,10 +138,21 @@ function onSubmit(e) {
 
         // v 5 - Object.assign
 
-        allTeams = [...allTeams];
-        const edited = allTeams.find(t => t.id === editId);
-        Object.assign(edited, team);
+        // allTeams = [...allTeams];
+        // const edited = allTeams.find(t => t.id === editId);
+        // Object.assign(edited, team);
 
+        // V 6
+        allTeams.map(t => {
+          if (t.id === editId) {
+            // intoarce t cu toate elementele si se schimba numai cele continute in team
+            return {
+              ...t,
+              ...team
+            };
+          }
+          return t;
+        });
         displayTeams(allTeams);
         $("#teamsForm").reset();
       }

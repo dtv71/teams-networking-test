@@ -171,7 +171,7 @@ function onSubmit(e) {
         console.info("saved", JSON.parse(JSON.stringify(team)));
         team.id = status.id;
         // allTeams.push(team);
-        allTeams = [...allTeams, team]; // trebie recreat modificat array-ul
+        allTeams = [...allTeams, team]; // trebuie recreat modificat array-ul
         displayTeams(allTeams);
         $("#teamsForm").reset();
       }
@@ -182,9 +182,9 @@ function onSubmit(e) {
 function filterElements(elements, search) {
   search = search.toLowerCase();
   return elements.filter(element => {
-    return Object.entries(element).some(entry => {
-      if (entry[0] !== "id") {
-        return entry[1].toLowerCase().includes(search);
+    return Object.entries(element).some(([key, value]) => {
+      if (key !== "id") {
+        return value.toLowerCase().includes(search);
       }
     });
   });

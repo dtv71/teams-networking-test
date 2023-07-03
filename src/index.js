@@ -51,7 +51,14 @@ function getTeamsAsHtml(team) {
     </tr>`;
   return row;
 }
+
+let previewdisplayTeams = [];
 function displayTeams(teams) {
+  if (previewdisplayTeams === teams) {
+    console.warn("same teams already displayed");
+    return;
+  }
+  previewdisplayTeams = teams;
   const teamsHTML = teams.map(getTeamsAsHtml);
   const tbody = $("#teamsTable tbody");
   tbody.innerHTML = teamsHTML.join("");
@@ -141,7 +148,8 @@ function onSubmit(e) {
         //v3
         console.info("saved", JSON.parse(JSON.stringify(team)));
         team.id = status.id;
-        allTeams.push(team);
+        // allTeams.push(team);
+        allTeams = [...allTeams, team];
         displayTeams(allTeams);
         $("#teamsForm").reset();
       }
@@ -195,6 +203,7 @@ function initEvents() {
   });
   $("#teamsForm").addEventListener("submit", onSubmit);
   $("#teamsForm").addEventListener("reset", () => {
+    displayTeams(allTeams);
     console.warn("reset");
     editId = undefined;
   });

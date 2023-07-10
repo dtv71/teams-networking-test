@@ -1,7 +1,9 @@
+// import { debounce } from "lodash"; // bad - do not import all library
 import { updateTeamRequest, createTeamRequest, deleteTeamRequest, loadTeamsRequest } from "./middleware";
 //import * as middleware from "./middleware";
 import "./style.css";
 import { $, debounce, filterElements, mask, unmask } from "./utilities";
+// import debounce from "lodash/debounce";
 
 let allTeams = [];
 let editId;

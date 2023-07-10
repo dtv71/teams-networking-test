@@ -2,6 +2,25 @@ export function $(selector) {
   return document.querySelector(selector);
 }
 
+export function debounce(fn, ms) {
+  let timer;
+  console.info("debounce", ms);
+  return function (e) {
+    console.warn("inside", timer, this, arguments);
+    const context = this;
+    const args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function (c) {
+      console.warn("debounce timeout...", context);
+      //fn.call(context, e);
+      //sau
+      fn.apply(context, args);
+      //sau
+      // fn.apply(context, [e]);
+    }, ms);
+  };
+}
+
 /**
  *
  * @param {String|Element} el

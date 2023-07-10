@@ -1,24 +1,37 @@
 import "./style.css";
+import { $, filterElements, mask, unmask } from "./utilities";
 
 let allTeams = [];
 let editId;
+const form = "#teamsForm";
 
-function $(selector) {
-  return document.querySelector(selector);
+function loadTeamsRequest() {
+  return fetch("http://localhost:3000/teams-json", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }).then(r => r.json());
 }
 
-function deleteTeamRequest(id) {
+function deleteTeamRequest(id, callback) {
   return fetch("http://localhost:3000/teams-json/delete", {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ id: id })
-  }).then(r => r.json());
+    body: JSON.stringify({ id })
+  })
+    .then(r => r.json())
+    .then(status => {
+      if (typeof callback === "function") {
+        callback(status);
+      }
+      return status;
+    });
 }
 
 function updateTeamRequest(team) {
-  // PUT teams-json/update
   return fetch("http://localhost:3000/teams-json/update", {
     method: "PUT",
     headers: {
@@ -29,7 +42,6 @@ function updateTeamRequest(team) {
 }
 
 function createTeamRequest(team) {
-  // POST teams-json/create
   return fetch("http://localhost:3000/teams-json/create", {
     method: "POST",
     headers: {
@@ -39,58 +51,56 @@ function createTeamRequest(team) {
   }).then(r => r.json());
 }
 
-function getTeamsAsHtml({ id, promotion, members, name, url }) {
-  const stringToReplace = "https://github.com/";
-  const displayUrl = url.startsWith(stringToReplace) ? ".../" + url.substring(stringToReplace.length) : url;
-  const row = `<tr>
+function getTeamAsHTML({ id, promotion, members, name, url }) {
+  const displayUrl = url.startsWith("https://github.com/") ? url.substring(19) : url;
+  return `<tr>
     <td>${promotion}</td>
     <td>${members}</td>
     <td>${name}</td>
     <td><a href="${url}" target="_blank">${displayUrl}</a></td>
     <td>
-    <a data-id="${id}" class="remove-btn" href="#">✖</a> 
-    <a data-id="${id}" class="edit-btn" href="#">&#9998</a></td>
-    </tr>`;
-  return row;
+      <a data-id="${id}" class="remove-btn">✖</a>
+      <a data-id="${id}" class="edit-btn">&#9998;</a>
+    </td>
+  </tr>`;
 }
 
 let previewDisplayTeams = [];
+
 function displayTeams(teams) {
-  if (previewDisplayTeams === teams) {
+  if (teams === previewDisplayTeams) {
     console.warn("same teams already displayed");
     return;
   }
-  if (teams.length === previewDisplayTeams) {
-    console.log("leng");
+
+  if (teams.length === previewDisplayTeams.length) {
     if (teams.every((team, i) => team === previewDisplayTeams[i])) {
-      console.warn("sameContent");
+      console.warn("same content");
       return;
     }
   }
+
   previewDisplayTeams = teams;
-  const teamsHTML = teams.map(getTeamsAsHtml);
-  const tbody = $("#teamsTable tbody");
-  tbody.innerHTML = teamsHTML.join("");
+  console.warn("displayTeams", teams);
+  const teamsHTML = teams.map(getTeamAsHTML);
+  $("#teamsTable tbody").innerHTML = teamsHTML.join("");
 }
 
+/**
+ *
+ * @returns {Promise<{id: string, promotion: string}[]>}
+ */
 function loadTeams() {
-  fetch("http://localhost:3000/teams-json", {
-    method: "GET",
-    headers: {
-      "Content-Type": "appplication/json"
-    }
-  })
-    .then(r => r.json())
-    .then(teams => {
-      allTeams = teams;
-      displayTeams(teams);
-    });
+  return loadTeamsRequest().then(teams => {
+    allTeams = teams;
+    displayTeams(teams);
+    return teams;
+  });
 }
 
 function startEdit(id) {
   editId = id;
   const team = allTeams.find(team => team.id == id);
-  console.log(team);
   setTeamValues(team);
 }
 
@@ -114,124 +124,82 @@ function getTeamValues() {
   };
 }
 
-function onSubmit(e) {
+async function onSubmit(e) {
   e.preventDefault();
+
   const team = getTeamValues();
+
+  mask(form);
+  let status;
+
   if (editId) {
     team.id = editId;
-    updateTeamRequest(team).then(status => {
-      if (status.success) {
-        // v 1
-        // window.location.reload();
-
-        //v 2
-        //loadTeams();
-
-        //v 3
-        //const i = allTeams.findIndex(t => t.id === editId);
-        //allteams[i] = team;
-
-        //v 4 - schimbam expplicit valorile modificate
-        // const edited = allTeams.find(t => t.id === editId);
-        // edited.name = team.name;
-        // edited.promotion = team.promotion;
-        // edited.members = team.members;
-        // edited.url = team.url;
-
-        // v 5 - Object.assign
-
-        // allTeams = [...allTeams];
-        // const edited = allTeams.find(t => t.id === editId);
-        // Object.assign(edited, team);
-
-        // V 6
-        allTeams.map(t => {
-          if (t.id === editId) {
-            // intoarce t cu toate elementele si se schimba numai cele continute in team
-            return {
-              ...t,
-              ...team
-            };
-          }
-          return t;
-        });
-        displayTeams(allTeams);
-        $("#teamsForm").reset();
-      }
-    });
+    status = await updateTeamRequest(team);
+    if (status.success) {
+      allTeams = allTeams.map(t => {
+        if (t.id === editId) {
+          console.warn("team", team);
+          // return team;
+          // return { ...team };
+          return {
+            ...t,
+            ...team
+          };
+        }
+        return t;
+      });
+    }
   } else {
-    createTeamRequest(team).then(status => {
-      if (status.success) {
-        // v1
-        // window.location.reload();
-        //v 2
-        //loadTeams();
+    status = await createTeamRequest(team);
+    if (status.success) {
+      //console.info("saved", JSON.parse(JSON.stringify(team)));
+      team.id = status.id;
+      allTeams = [...allTeams, team];
+    }
+  }
 
-        //v3
-        console.info("saved", JSON.parse(JSON.stringify(team)));
-        team.id = status.id;
-        // allTeams.push(team);
-        allTeams = [...allTeams, team]; // trebuie recreat modificat array-ul
-        displayTeams(allTeams);
-        $("#teamsForm").reset();
-      }
-    });
+  if (status.success) {
+    displayTeams(allTeams);
+    $("#teamsForm").reset();
+    unmask(form);
   }
 }
 
-function filterElements(elements, search) {
-  search = search.toLowerCase();
-  return elements.filter(element => {
-    return Object.entries(element).some(([key, value]) => {
-      if (key !== "id") {
-        return value.toLowerCase().includes(search);
-      }
-    });
-  });
-}
-
-function filterTeams(allTeams, searchText) {
-  return allTeams.filter(team => {
-    return Object.entries(team).some(entry => {
-      if (entry[0] !== "id") {
-        return entry[1].toLowerCase().includes(searchText);
-      }
-    });
-  });
-}
-
-function searchTeams(e) {
-  let searchText = e.target.value.toLowerCase();
-  const teams = filterElements(allTeams, searchText);
-  //console.log(teams);
-  displayTeams(teams);
-}
-
 function initEvents() {
+  $("#searchTeams").addEventListener("input", e => {
+    const teams = filterElements(allTeams, e.target.value);
+    displayTeams(teams);
+  });
+
   $("#teamsTable tbody").addEventListener("click", e => {
     if (e.target.matches("a.remove-btn")) {
       const id = e.target.dataset.id;
-      deleteTeamRequest(id, ({ success }) => {
+      //console.warn("remove %o", id);
+      mask(form);
+      deleteTeamRequest(id, async ({ success }) => {
         if (success) {
-          console.warn("delete done", success``);
-          loadTeams();
+          await loadTeams();
+          unmask(form);
         }
       });
     } else if (e.target.matches("a.edit-btn")) {
       const id = e.target.dataset.id;
-
       startEdit(id);
-      // console.warn("edit", e.target.parentNode);
     }
   });
+
   $("#teamsForm").addEventListener("submit", onSubmit);
   $("#teamsForm").addEventListener("reset", () => {
     displayTeams(allTeams);
     console.warn("reset");
     editId = undefined;
   });
-  $("#searchTeams").addEventListener("input", searchTeams);
 }
 
-loadTeams();
 initEvents();
+
+(async () => {
+  mask(form);
+  await loadTeams();
+  unmask(form);
+})();

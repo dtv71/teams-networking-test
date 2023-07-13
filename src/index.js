@@ -12,7 +12,7 @@ const form = "#teamsForm";
 function getTeamAsHTML({ id, promotion, members, name, url }) {
   const displayUrl = url.startsWith("https://github.com/") ? url.substring(19) : url;
   return `<tr>
-    <td><input type="checkbox" name="selected" value="${id}"</td>
+    <td style="text-align:center"><input type="checkbox" name="selected" value="${id}"</td>
     <td>${promotion}</td>
     <td>${members}</td>
     <td>${name}</td>
@@ -126,14 +126,19 @@ async function onSubmit(e) {
 }
 
 async function removeSelected() {
-  mask(form);
+  mask("#main");
   const selected = document.querySelectorAll("input[name=selected]:checked");
-  console.log(selected[0].value);
-  selected.forEach(input => {
-    deleteTeamRequest(input.value);
-  });
+  const ids = [...selected].map(input => input.value);
+  const promises = ids.map(id => deleteTeamRequest(id));
+  const statuses = await Promise.allSettled(promises); //da un alt promiise care va veni dupa ce se termina toate promisiunil
+  console.log(statuses);
+
+  //metoda veche
+  // selected.forEach(input => {
+  //   deleteTeamRequest(input.value);
+  // });
   await loadTeams();
-  unmask(form);
+  unmask("#main");
 }
 function initEvents() {
   $("#removeSelected").addEventListener("click", debounce(removeSelected, 200));

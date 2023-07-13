@@ -127,10 +127,13 @@ async function onSubmit(e) {
 
 async function removeSelected() {
   mask("#main");
+  console.time("remove");
   const selected = document.querySelectorAll("input[name=selected]:checked");
   const ids = [...selected].map(input => input.value);
   const promises = ids.map(id => deleteTeamRequest(id));
+  promises.push(sleep(2000));
   const statuses = await Promise.allSettled(promises); //da un alt promiise care va veni dupa ce se termina toate promisiunil
+  console.timeEnd("remove");
   console.log(statuses);
 
   //metoda veche

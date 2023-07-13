@@ -82,6 +82,10 @@ h1 {
 #teamsTable td {
   border: 1px solid #057988;
   padding: 5px;
+  line-height: 30px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 #teamsTable th {
@@ -93,12 +97,37 @@ h1 {
   background-color: #f2f2f2;
 }
 
-#teamsTable tfoot input:not([type="image" i]) {
+#teamsTable input:not([type="image" i]) {
   box-sizing: border-box;
 }
 
-#teamsTable tfoot input[type="text"] {
+#teamsTable input[type="text"] {
   width: 100%;
+}
+
+.table-actions {
+  width: 90px;
+}
+.select-all-column {
+  width: 40px;
+}
+.action-btn {
+  cursor: pointer;
+  min-width: 34px;
+  min-height: 28px;
+}
+.remove-btn,
+.edit-btn {
+  display: none;
+}
+#teamsTable tr:hover .action-btn {
+  display: inline-block;
+}
+.remove-btn {
+  color: darkred;
+}
+.edit-btn {
+  color: green;
 }
 
 footer {
@@ -134,17 +163,6 @@ footer .item {
 a {
   color: #0096d6;
   text-decoration: none;
-}
-.remove-btn:hover {
-  text-decoration: underline;
-  color: darkred;
-  cursor: pointer;
-}
-
-.edit-btn:hover {
-  text-decoration: underline;
-  color: green;
-  cursor: pointer;
 }
 
 .loading-mask {

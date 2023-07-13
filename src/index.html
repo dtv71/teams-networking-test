@@ -27,12 +27,12 @@
       <form id="teamsForm" action="" method="get">
         <table id="teamsTable">
           <colgroup>
-            <col style="width: 40px" />
-            <col span="1" style="width: 125px" />
-            <col span="1" />
-            <col span="1" />
-            <col span="1" style="width: 300px" />
-            <col span="1" style="width: 80px" />
+            <col class="select-all-column" />
+            <col style="width: 20%" />
+            <col style="width: 40%" />
+            <col style="width: 25%" />
+            <col style="width: 15%" />
+            <col class="table-actions" />
           </colgroup>
           <thead>
             <tr>
@@ -61,8 +61,8 @@
                 <input type="text" name="url" id="url" placeholder="Enter Url" required />
               </td>
               <td>
-                <button type="submit">💾</button>
-                <button type="reset">✖</button>
+                <button type="submit" class="action-btn">💾</button>
+                <button type="reset" class="action-btn">✖️</button>
               </td>
             </tr>
           </tfoot>

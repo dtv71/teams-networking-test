@@ -2,7 +2,7 @@
 import { updateTeamRequest, createTeamRequest, deleteTeamRequest, loadTeamsRequest } from "./middleware";
 //import * as middleware from "./middleware";
 import "./style.css";
-import { $, $$, debounce, filterElements, mask, unmask } from "./utilities";
+import { $, $$, debounce, filterElements, mask, unmask, sleep } from "./utilities";
 // import debounce from "lodash/debounce";
 
 let allTeams = [];
@@ -92,8 +92,8 @@ function startEdit(id) {
 }
 
 function setInputsDisabled(disabled) {
-  $$("tfoot input").forEach(input => {
-    input.disabled = disabled;
+  $$("tfoot input, tfoot button").forEach(el => {
+    el.disabled = disabled;
   });
 }
 
@@ -105,8 +105,8 @@ function setTeamValues({ promotion, members, name, url }) {
 }
 
 function getTeamValues() {
-  const promotion = $("#promotion").value;
-  const members = $("#members").value;
+  const promotion = $("input[name=promotion]").value;
+  const members = $("input[name=members]").value;
   const name = $("input[name=name]").value;
   const url = $("input[name=url]").value;
   return {

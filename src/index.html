@@ -1,84 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Teams Networking</title>
-  </head>
-  <body>
-    <header>
-      <div id="header-wrapper">
-        <div id="my-picture">
-          <img src="images/network-team-icon.png" alt="poza" width="100" />
-        </div>
-        <div id="header-info">
-          <h1>Teams Networking</h1>
-          <h2 id="job-title">CRUD operations (CREATE, READ, UPDATE, DELETE)</h2>
-        </div>
-      </div>
-    </header>
-    <div id="main">
-      <div class="tbar">
-        <button id="removeSelected">✖ Remove selected</button>
-        <div class="tfill"></div>
-        <input type="search" name="search" id="searchTeams" placeholder="Search..." />
-        <label for="searchTeams">🔎</label>
-      </div>
-      <form id="teamsForm" action="" method="get">
-        <table id="teamsTable">
-          <colgroup>
-            <col class="select-all-column" />
-            <col style="width: 20%" />
-            <col style="width: 40%" />
-            <col style="width: 25%" />
-            <col style="width: 15%" />
-            <col class="table-actions" />
-          </colgroup>
-          <thead>
-            <tr>
-              <th><input type="checkbox" name="selectAll" id="selectAll" /></th>
-              <th>Promotion</th>
-              <th>Members</th>
-              <th>Project name</th>
-              <th>Project URL</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-          <tfoot>
-            <tr>
-              <td>&nbsp;</td>
-              <td>
-                <input type="text" name="promotion" id="promotion" placeholder="Enter Promotion" required />
-              </td>
-              <td>
-                <input type="text" name="members" id="members" placeholder="Enter Members" required />
-              </td>
-              <td>
-                <input type="text" name="name" id="name" placeholder="Enter Project name" required />
-              </td>
-              <td>
-                <input type="text" name="url" id="url" placeholder="Enter Url" required />
-              </td>
-              <td>
-                <button type="submit" class="action-btn">💾</button>
-                <button type="reset" class="action-btn">✖️</button>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
-      </form>
-    </div>
 
-    <footer>
-      <a class="item" href="https://github.com/dtv71/teams-networking-test/tree/main" target="_blank">
-        <span>👩‍💻 </span><span>Source code</span>
-      </a>
-      <span class="item">|</span>
-      <a class="item" href="https://github.com/nmatei/node-api" target="_blank">
-        <span>📃</span>
-        <span>API docs</span>
-      </a>
-    </footer>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teams Networking</title>
+</head>
+
+<body>
+  <header>
+    <div id="header-wrapper">
+      <div id="my-picture">
+        <img src="images/network-team-icon.png" alt="poza" width="100" />
+      </div>
+      <div id="header-info">
+        <h1>Teams Networking</h1>
+        <h2 id="job-title">CRUD operations (CREATE, READ, UPDATE, DELETE)</h2>
+      </div>
+    </div>
+  </header>
+  <div id="main">
+    <div class="tbar">
+      <button id="removeSelected">✖ Remove selected</button>
+      <div class="tfill"></div>
+      <input type="search" name="search" id="searchTeams" placeholder="Search..." />
+      <label for="searchTeams">🔎</label>
+    </div>
+    <form id="teamsForm" action="" method="get">
+      <table id="teamsTable">
+        <colgroup>
+          <col class="select-all-column" />
+          <col style="width: 20%" />
+          <col style="width: 40%" />
+          <col style="width: 25%" />
+          <col style="width: 15%" />
+          <col class="table-actions" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th><input type="checkbox" name="selectAll" id="selectAll" /></th>
+            <th>Promotion</th>
+            <th>Members</th>
+            <th>Project name</th>
+            <th>Project URL</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot>
+          <tr>
+            <td>&nbsp;</td>
+            <td>
+              <input type="text" name="promotion" placeholder="Enter Promotion" required />
+            </td>
+            <td>
+              <input type="text" name="members" placeholder="Enter Members" required />
+            </td>
+            <td>
+              <input type="text" name="name" placeholder="Enter Project name" required />
+            </td>
+            <td>
+              <input type="text" name="url" placeholder="Enter Url" required />
+            </td>
+            <td>
+              <button type="submit" class="action-btn">➕</button>
+              <button type="reset" class="action-btn">✖️</button>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </form>
+  </div>
+
+  <footer>
+    <a class="item" href="https://github.com/dtv71/teams-networking-test/tree/main" target="_blank">
+      <span>👩‍💻 </span><span>Source code</span>
+    </a>
+    <span class="item">|</span>
+    <a class="item" href="https://github.com/nmatei/node-api" target="_blank">
+      <span>📃</span>
+      <span>API docs</span>
+    </a>
+  </footer>
+</body>
+
 </html>
